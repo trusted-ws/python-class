@@ -4,7 +4,7 @@ from custom import set_attributes
 
 class Vehicle(metaclass=Automatic):
     
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
 
         props = {
             'private': {
@@ -13,7 +13,7 @@ class Vehicle(metaclass=Automatic):
             },
             'public': {'speed': int}
         }
-        set_attributes(self, props, cls_name=self.__class_name__, **kwargs)
+        set_attributes(self, props, self.__cls__, *args, **kwargs)
         self.__tank = .0
 
     def fill_tank(self, amount: float) -> int:
@@ -43,7 +43,7 @@ class Vehicle(metaclass=Automatic):
         return self.__brand
 
 class Car(Vehicle):
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         props = {
             'private': {
                 'color': str, 'owner': str, 'year': int, 'plate': str,
@@ -51,7 +51,7 @@ class Car(Vehicle):
             },
             'public': {}
         }
-        set_attributes(self, props, **kwargs)
+        set_attributes(self, props, None, *args, **kwargs)
         super().__init__(**kwargs)
 
     def get_my_obj(self):
@@ -70,4 +70,3 @@ car = Car(**{
 print(car.get_fuel())
 car.fill_tank(50)
 print(car.get_fuel())
-
